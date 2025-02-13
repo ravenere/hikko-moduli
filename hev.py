@@ -26,7 +26,7 @@ class HEVModule(loader.Module):
         output = ""
         for phrase in HEV_PHRASES:
             output += phrase + "\n"
-            await utils.answer(message, output.strip())
-            await asyncio.sleep(random.uniform(1.1, 2.3))  # Рандомная задержка перед изменением сообщения
+            await utils.answer(message, output.strip(), parse_mode="Markdown")
+            await asyncio.sleep(random.uniform(1.14, 2.65))  # Рандомная задержка перед изменением сообщения
         await asyncio.sleep(random.uniform(7, 10))  # Рандомная задержка перед финальной фразой
         await utils.answer(message, output.strip() + "\n***[+] H.E.V. boot sequence complete***")
