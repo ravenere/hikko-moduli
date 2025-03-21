@@ -40,7 +40,7 @@ class HerokuFriendsMod(loader.Module):
             ),
         )
 
-    def ender_info(self, inline: bool) -> str:
+    def ender_friends(self, inline: bool) -> str:
         try:
             repo = git.Repo(search_parent_directories=True)
             diff = repo.git.log([f"HEAD..origin/{version.branch}", "--oneline"])
@@ -166,16 +166,16 @@ class HerokuFriendsMod(loader.Module):
             return await self.upload_pp_to_oxo(photos[0])
         return "https://i.imgur.com/op3jqNk.png"
 
-    async def info(self, _: InlineQuery) -> dict:
-        """Send userbot info"""
+    async def friends(self, _: InlineQuery) -> dict:
+        """Send userbot friends"""
 
         return {
-            "title": self.strings("send_info"),
+            "title": self.strings("send_friends"),
             "description": self.strings("description"),
             **(
-                {"photo": self.config["banner_url"], "caption": self.ender_info(True)}
+                {"photo": self.config["banner_url"], "caption": self.ender_friends(True)}
                 if self.config["banner_url"]
-                else {"message": self.ender_info(True)}
+                else {"message": self.ender_friends(True)}
             ),
             "thumb": (
                 "https://github.com/hikariatama/Hikka/raw/master/assets/hikka_pfp.png"
@@ -184,7 +184,7 @@ class HerokuFriendsMod(loader.Module):
         }
 
     @loader.command()
-    async def infocmd(self, message: Message):
+    async def friendscmd(self, message: Message):
         if self.config.get('pp_to_banner', True):
             print(self.config['banner_url'])
             try:
@@ -197,7 +197,7 @@ class HerokuFriendsMod(loader.Module):
         await utils.answer_file(
             message,
             self.config["banner_url"],
-            self.ender_info(False),
+            self.ender_friends(False),
         )
 
     @loader.command()
@@ -205,10 +205,10 @@ class HerokuFriendsMod(loader.Module):
         await utils.answer(message, self.strings("desc"))
 
     @loader.command()
-    async def setinfo(self, message: Message):
+    async def setfriends(self, message: Message):
         if not (args := utils.get_args_html(message)):
-            return await utils.answer(message, self.strings("setinfo_no_args"))
+            return await utils.answer(message, self.strings("setfriends_no_args"))
 
         self.config["custom_friends_message"] = args
-        await utils.answer(message, self.strings("setinfo_success"))
+        await utils.answer(message, self.strings("setfriends_success"))
 
