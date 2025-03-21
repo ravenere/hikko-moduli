@@ -9,7 +9,7 @@ import platform as lib_platform
 import getpass
 
 @loader.tds
-class HerokuInfoMod(loader.Module):
+class HerokuFriendsMod(loader.Module):
     """Show friends :)"""
 
     strings = {"name": "HerokuFriends"}
