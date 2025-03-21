@@ -40,12 +40,12 @@ class HerokuFriendsMod(loader.Module):
             ),
         )
 
-    def _render_info_r(self, inline: bool) -> str:
+    def ender_info(self, inline: bool) -> str:
         try:
             repo = git.Repo(search_parent_directories=True)
             diff = repo.git.log([f"HEAD..origin/{version.branch}", "--oneline"])
             upd = (
-                self.strings("update_required") if diff else self.strings("up-to-date")
+                self.strings("updateequired") if diff else self.strings("up-to-date")
             )
         except Exception:
             upd = ""
@@ -95,7 +95,7 @@ class HerokuFriendsMod(loader.Module):
                 upd=upd,
                 uptime=utils.formatted_uptime(),
                 cpu_usage=utils.get_cpu_usage(),
-                ram_usage=f"{utils.get_ram_usage()} MB",
+                ram_usage=f"{utils.getam_usage()} MB",
                 branch=version.branch,
                 hostname=lib_platform.node(),
                 user=getpass.getuser(),
@@ -112,7 +112,7 @@ class HerokuFriendsMod(loader.Module):
                 f' {self.strings("cpu_usage")}:'
                 f"</b> <i>~{utils.get_cpu_usage()} %</i>\n<b>{{}}"
                 f' {self.strings("ram_usage")}:'
-                f"</b> <i>~{utils.get_ram_usage()} MB</i>\n<b>{{}}</b>"
+                f"</b> <i>~{utils.getam_usage()} MB</i>\n<b>{{}}</b>"
             ).format(
                 *map(
                     lambda x: utils.remove_html(x) if inline else x,
@@ -135,7 +135,7 @@ class HerokuFriendsMod(loader.Module):
             )
         )
 
-    async def upload_pp_to_oxo_r(self, photo):
+    async def upload_pp_to_oxo(self, photo):
         save_path = "profile_photo.jpg"
         await self._client.download_media(photo, file=save_path)
 
@@ -160,22 +160,22 @@ class HerokuFriendsMod(loader.Module):
             if os.path.exists(save_path):
                 os.remove(save_path)
 
-    async def get_pp_for_banner_r(self):
+    async def get_pp_for_banner(self):
         photos = await self._client.get_profile_photos('me')
         if photos:
             return await self.upload_pp_to_oxo(photos[0])
         return "https://i.imgur.com/op3jqNk.png"
 
-    async def info_r(self, _: InlineQuery) -> dict:
+    async def info(self, _: InlineQuery) -> dict:
         """Send userbot info"""
 
         return {
             "title": self.strings("send_info"),
             "description": self.strings("description"),
             **(
-                {"photo": self.config["banner_url"], "caption": self._render_info(True)}
+                {"photo": self.config["banner_url"], "caption": self.ender_info(True)}
                 if self.config["banner_url"]
-                else {"message": self._render_info(True)}
+                else {"message": self.ender_info(True)}
             ),
             "thumb": (
                 "https://github.com/hikariatama/Hikka/raw/master/assets/hikka_pfp.png"
@@ -184,7 +184,7 @@ class HerokuFriendsMod(loader.Module):
         }
 
     @loader.command()
-    async def infocmd_r(self, message: Message):
+    async def infocmd(self, message: Message):
         if self.config.get('pp_to_banner', True):
             print(self.config['banner_url'])
             try:
@@ -197,15 +197,15 @@ class HerokuFriendsMod(loader.Module):
         await utils.answer_file(
             message,
             self.config["banner_url"],
-            self._render_info(False),
+            self.ender_info(False),
         )
 
     @loader.command()
-    async def herokufriends_r(self, message: Message):
+    async def herokufriends(self, message: Message):
         await utils.answer(message, self.strings("desc"))
 
     @loader.command()
-    async def setinfo_r(self, message: Message):
+    async def setinfo(self, message: Message):
         if not (args := utils.get_args_html(message)):
             return await utils.answer(message, self.strings("setinfo_no_args"))
 
