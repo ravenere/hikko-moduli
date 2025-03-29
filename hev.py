@@ -31,3 +31,5 @@ class HEVModule(loader.Module):
         
         await asyncio.sleep(random.uniform(7, 10)) 
         await message.edit(output.strip() + "\n\n**[+] H.E.V. boot sequence complete**", parse_mode="markdown")
+
+#chatgpt $$elfcode
