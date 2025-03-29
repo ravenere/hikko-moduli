@@ -52,4 +52,5 @@ class FriendsMod(loader.Module):
 
         self.config["friends_banner_url"] = args
         await utils.answer(message, "Ссылка на картинку успешно обновлена!")
+        
 #chatgpt $$elfcode
