@@ -175,6 +175,6 @@ class DiscordStatusCombinedMod(loader.Module):
 
     async def on_unload(self):
         if self.bot and self.bot_ready:
-            await self.bot.disconnect()
+            await self.bot.close()
         if self.client and self._client_ready:
-            await self.client.close()
+            await self.client.disconnect()
