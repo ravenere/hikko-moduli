@@ -31,6 +31,7 @@ class DiscordStatusCombinedMod(loader.Module):
 
     async def client_ready(self, client, db):
         self._client = client
+        self._client = client
         self._db = db
         if self.config["DISCORD_BOT_TOKEN"]:
             try:
