@@ -28,7 +28,7 @@ class DiscordStatusCombinedMod(loader.Module):
             "DISCORD_USER_TOKEN", None, lambda: "Токен пользователя Discord (для .dcs_c)",
         )
 
-    async def client_ready(self, client, db):
+    async def _client_ready(self, client, db):
         self._client = client
         self._db = db
         if self.config["DISCORD_BOT_TOKEN"]:
