@@ -23,7 +23,7 @@ class DiscordStatusCombinedMod(loader.Module):
         self.bot = None
         self.client = None
         self.bot_ready = False
-        self.client_ready = False
+        self.clnt_ready = False
         self.config = loader.ModuleConfig(
             "DISCORD_BOT_TOKEN", None, lambda: "Токен Discord бота (для .dcs_b)",
             "DISCORD_USER_TOKEN", None, lambda: "Токен пользователя Discord (для .dcs_c)",
@@ -33,11 +33,10 @@ class DiscordStatusCombinedMod(loader.Module):
         self._client = client
         self._db = db
         if self.config["DISCORD_BOT_TOKEN"]:
-            await self.start_bot()
-            # try:
-            #     await self.start_bot()
-            # except Exception as e:
-            #     logger.error(f"Ошибка запуска бота: {e}")
+            try:
+                await self.start_bot()
+            except Exception as e:
+                logger.error(f"Ошибка запуска бота: {e}")
         if self.config["DISCORD_USER_TOKEN"]:
             try:
                 await self.start_client()
@@ -67,7 +66,7 @@ class DiscordStatusCombinedMod(loader.Module):
 
         @self.client.event
         async def on_ready():
-            self.client_ready = True
+            self.clnt_ready = True
             logger.info(f"Discord клиент готов: {self.client.user.name}")
 
         asyncio.create_task(self.client.start(
