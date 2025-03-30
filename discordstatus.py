@@ -4,6 +4,12 @@ import discord
 from discord.ext import commands
 import asyncio
 import time
+# ---------------------------------------------------------------------------------
+# Name: DiscordStatus
+# Description: Модуль для проверки статуса Discord RPC (бот [_b] (общий сервер) + клиент [_c] (если пользователь в друзьях.
+# requires: discord.py[all]
+# ---------------------------------------------------------------------------------
+
 
 @loader.tds
 class DiscordStatusCombinedMod(loader.Module):

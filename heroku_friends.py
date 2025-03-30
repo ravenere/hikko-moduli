@@ -2,6 +2,10 @@ import requests
 import os
 from .. import loader, utils
 from hikkatl.tl.types import Message
+# ---------------------------------------------------------------------------------
+# Name: Heroku Friends
+# Description: Heroku Info, but not info, friends.
+# ---------------------------------------------------------------------------------
 
 @loader.tds
 class FriendsMod(loader.Module):
@@ -28,7 +32,6 @@ class FriendsMod(loader.Module):
         banner_url = self.config["friends_banner_url"]
         custom_message = self.config["custom_friends_message"]
 
-        # Отправляем картинку с подписью
         await utils.answer_file(
             message,
             banner_url,
