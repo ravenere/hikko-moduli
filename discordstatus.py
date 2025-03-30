@@ -48,8 +48,7 @@ class DiscordStatusCombinedMod(loader.Module):
         intents.presences = True
         intents.members = True
 
-        # префикс НЕ ЮЗЕРБОТА! лучше не менять
-        self.bot = commands.Bot(command_prefix="!", intents=intents, self_bot=False)
+        self.bot = commands.Bot(command_prefix="!", intents=intents, self_bot=False) # префикс НЕ ЮЗЕРБОТА! лучше не менять
         
         @self.bot.event
         async def on_ready():
