@@ -57,7 +57,7 @@ class DiscordStatusCombinedMod(loader.Module):
         @self.client.event
         async def on_ready():
             self.client_ready = True
-            pawait utils.answer(message, f"Discord клиент готов: {self.client.user.name}")
+            await utils.answer(message, f"Discord клиент готов: {self.client.user.name}")
 
         asyncio.create_task(self.client.start(self.config["DISCORD_USER_TOKEN"], bot=False))
 
