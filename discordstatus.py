@@ -31,13 +31,13 @@ class DiscordStatusCombinedMod(loader.Module):
 
     async def client_ready(self, client, db):
         self._client = client
-        self._client = client
         self._db = db
         if self.config["DISCORD_BOT_TOKEN"]:
-            try:
-                await self.start_bot()
-            except Exception as e:
-                logger.error(f"Ошибка запуска бота: {e}")
+            await self.start_bot()
+            # try:
+            #     await self.start_bot()
+            # except Exception as e:
+            #     logger.error(f"Ошибка запуска бота: {e}")
         if self.config["DISCORD_USER_TOKEN"]:
             try:
                 await self.start_client()
