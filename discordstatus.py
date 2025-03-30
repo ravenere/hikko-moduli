@@ -23,7 +23,6 @@ class DiscordStatusCombinedMod(loader.Module):
         self.bot = None
         self.client = None
         self.bot_ready = False
-        self.clnt_ready = False
         self.config = loader.ModuleConfig(
             "DISCORD_BOT_TOKEN", None, lambda: "Токен Discord бота (для .dcs_b)",
             "DISCORD_USER_TOKEN", None, lambda: "Токен пользователя Discord (для .dcs_c)",
