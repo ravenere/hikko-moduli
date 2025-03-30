@@ -1,10 +1,12 @@
-from hikka import loader, utils
-import asyncio
-import random
 # ---------------------------------------------------------------------------------
 # Name: Модуль, который воспроизводит фразы HEV из Black Mesa
 # Description: Запускает последовательное воспроизведение фраз HEV.
 # ---------------------------------------------------------------------------------
+
+
+from hikka import loader, utils
+import asyncio
+import random
 
 HEV_PHRASES = [
     "[!] Welcome to the **H.E.V Mark IV**, protective system for use in hazardous environment conditions.",

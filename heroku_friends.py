@@ -1,11 +1,12 @@
-import requests
-import os
-from .. import loader, utils
-from hikkatl.tl.types import Message
 # ---------------------------------------------------------------------------------
 # Name: Heroku Friends
 # Description: Heroku Info, but not info, friends.
 # ---------------------------------------------------------------------------------
+
+import requests
+import os
+from .. import loader, utils
+from hikkatl.tl.types import Message
 
 @loader.tds
 class FriendsMod(loader.Module):
