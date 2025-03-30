@@ -3,6 +3,7 @@
 # Description: Модуль для проверки статуса Discord RPC (бот [_b] (общий сервер) + клиент [_c] (если пользователь в друзьях.
 # requires: discord.py==2.5.2
 # ---------------------------------------------------------------------------------
+
 from hikkatl.types import Message
 from .. import loader, utils
 import discord
@@ -15,7 +16,7 @@ logger = logging.getLogger(__name__)
 
 @loader.tds
 class DiscordStatusCombinedMod(loader.Module):
-    """Модуль для проверки статуса Discord RPC"""
+    """Модуль для проверки статуса Discord RPC (бот [_b] (общий сервер) + клиент [_c] (если пользователь в друзьях))"""
     strings = {"name": "DiscordStatusCombined"}
 
     def __init__(self):
@@ -29,48 +30,34 @@ class DiscordStatusCombinedMod(loader.Module):
         )
 
     async def client_ready(self, client, db):
-        self._db = db
         self._client = client
+        self._db = db
         if self.config["DISCORD_BOT_TOKEN"]:
-            await self.start_bot()
+            try:
+                await self.start_bot()
+            except Exception as e:
+                logger.error(f"Ошибка запуска бота: {e}")
         if self.config["DISCORD_USER_TOKEN"]:
-            await self.start_client()
+            try:
+                await self.start_client()
+            except Exception as e:
+                logger.error(f"Ошибка запуска клиента: {e}")
 
     async def start_bot(self):
-        """Запуск Discord бота"""
-        try:
-            intents = discord.Intents.default()
-            intents.presences = True
-            intents.members = True
+        """Запуск Discord бота (для .dcs_b)"""
+        intents = discord.Intents.default()
+        intents.presences = True
+        intents.members = True
 
-            self.bot = commands.Bot(command_prefix="!", intents=intents, self_bot=False)
-            
-            @self.bot.event
-            async def on_ready():
-                self.bot_ready = True
-                logger.info(f"Discord бот готов: {self.bot.user.name}")
+        # префикс НЕ ЮЗЕРБОТА! лучше не менять
+        self.bot = commands.Bot(command_prefix="!", intents=intents, self_bot=False)
+        
+        @self.bot.event
+        async def on_ready():
+            self.bot_ready = True
+            logger.info(f"Discord бот готов: {self.bot.user.name}")
 
-            asyncio.create_task(self.bot.start(self.config["DISCORD_BOT_TOKEN"]))
-        except Exception as e:
-            logger.error(f"Ошибка запуска бота: {e}")
-
-    async def start_client(self):
-        """Запуск Discord клиента"""
-        try:
-            intents = discord.Intents.all()
-            self.client = discord.Client(intents=intents)
-
-            @self.client.event
-            async def on_ready():
-                self.client_ready = True
-                logger.info(f"Discord клиент готов: {self.client.user.name}")
-
-            asyncio.create_task(self.client.start(
-                self.config["DISCORD_USER_TOKEN"], 
-                bot=False
-            ))
-        except Exception as e:
-            logger.error(f"Ошибка запуска клиента: {e}")
+        asyncio.create_task(self.bot.start(self.config["DISCORD_BOT_TOKEN"]))
 
     async def start_client(self):
         """Запуск Discord клиента (для .dcs_c)"""
@@ -80,9 +67,12 @@ class DiscordStatusCombinedMod(loader.Module):
         @self.client.event
         async def on_ready():
             self.client_ready = True
-            await utils.answer(message, f"Discord клиент готов: {self.client.user.name}")
+            logger.info(f"Discord клиент готов: {self.client.user.name}")
 
-        asyncio.create_task(self.client.start(self.config["DISCORD_USER_TOKEN"], bot=False))
+        asyncio.create_task(self.client.start(
+            self.config["DISCORD_USER_TOKEN"], 
+            bot=False
+        ))
 
     async def dcs_b_cmd(self, message: Message):
         """Проверить статус пользователя через бота (серверы). Использование: .dcs_b <ID/@тег>"""
@@ -189,5 +179,3 @@ class DiscordStatusCombinedMod(loader.Module):
             await self.bot.close()
         if self.client and self.client_ready:
             await self.client.close()
-
-#chatgpt $$elfcode
