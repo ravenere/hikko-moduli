@@ -65,7 +65,7 @@ class DiscordStatusCombinedMod(loader.Module):
 
         @self.client.event
         async def on_ready():
-            self.clnt_ready = True
+            self._client_ready = True
             logger.info(f"Discord клиент готов: {self.client.user.name}")
 
         asyncio.create_task(self.client.start(
@@ -98,7 +98,7 @@ class DiscordStatusCombinedMod(loader.Module):
 
     async def dcs_c_cmd(self, message: Message):
         """Проверить статус друга через клиент. Использование: .dcs_c <ID/имя>"""
-        if not self.client_ready:
+        if not self._client_ready:
             await utils.answer(message, "❌ Discord клиент не готов. Проверьте токен!")
             return
 
